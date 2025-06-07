@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global fade-in animation for subtle UI appearance */
 @layer utilities {
   .animate-fadeIn {
     animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -15,7 +14,6 @@
   }
 }
 
-/* Keyframes for fadeIn with smooth translate */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -27,7 +25,6 @@
   }
 }
 
-/* Custom utility for max content width container, centered */
 .container {
   max-width: 1200px;
   margin-left: auto;
@@ -36,7 +33,6 @@
   padding-right: 1.5rem;
 }
 
-/* Body font and bg */
 body {
   @apply bg-white font-sans text-gray-700;
 }

@@ -1,25 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ProgressBar from './ProgressBar';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import { registerUser } from '../api'; 
+import { OnboardingContext } from '../context/OnboardingContext';
 
 export default function OnboardingWizard() {
   const [step, setStep] = useState(1);
   const totalSteps = 3;
+  const [collectedData, setCollectedData] = useState({});
+  const { setUserData } = useContext(UserContext);
+  const { updateOnboardingData } = useContext(OnboardingContext);
+  const navigate = useNavigate();
 
-  const handleNext = (formData) => {
-    // formData can be used or passed upwards if needed
+  const handleNext = (data) => {
+    setCollectedData(prev => ({ ...prev, ...data }));
     setStep((s) => Math.min(s + 1, totalSteps));
   };
 
-  const handleBack = () => {
-    setStep((s) => Math.max(s - 1, 1));
-  };
+  const handleBack = () => setStep((s) => Math.max(s - 1, 1));
 
-  const handleSubmit = (finalData) => {
-    // final submission logic here
-    console.log('Submitting all data…', finalData);
+  const handleSubmit = async (finalStepData) => {
+    const fullData = { ...collectedData, ...finalStepData };
+    try {
+      const response = await registerUser(fullData); 
+      console.log('✅ API response:', response); 
+      setUserData({ ...response, onboarded: true }); 
+      updateOnboardingData(fullData); 
+      navigate('/welcome', { replace: true });
+    } 
+    catch (err) {
+      console.error('Registration failed:', err);
+      alert('Error saving data. Please try again.');
+    }
   };
 
   return (

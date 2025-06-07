@@ -7,7 +7,6 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: actually register...
     navigate('/onboarding/step1');
   };
 

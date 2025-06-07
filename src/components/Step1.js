@@ -17,6 +17,7 @@ export default function Step1({ onNext }) {
         className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         aria-label="Name"
       />
+      
       <input
         type="email"
         placeholder="Email"
